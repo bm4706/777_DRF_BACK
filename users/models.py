@@ -3,7 +3,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, nickname, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -13,19 +13,21 @@ class MyUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
+            nickname=nickname,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, email, nickname, password=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
             email,
+            nickname=nickname,
             password=password,
             
         )
@@ -40,7 +42,7 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    nickname = models.CharField(max_length=100, unique=True)
+    nickname = models.CharField(max_length=100, unique=True, null=True)
     
     image = models.ImageField(upload_to="", null=True, blank=True) # blank=True면 Optional 필드
     
@@ -50,7 +52,7 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["nickname"]
 
     def __str__(self):
         return self.email
