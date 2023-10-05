@@ -10,6 +10,8 @@ class MyUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError("Users must have an email address")
+        # if not nickname:
+        #     raise ValueError('must have user nickname')
 
         user = self.model(
             email=self.normalize_email(email),
@@ -42,7 +44,7 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    nickname = models.CharField(max_length=100, unique=True, null=True)
+    nickname = models.CharField(max_length=100, unique=True)
     
     image = models.ImageField(upload_to="", null=True, blank=True) # blank=True면 Optional 필드
     
