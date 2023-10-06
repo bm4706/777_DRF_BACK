@@ -1,6 +1,19 @@
 from rest_framework import serializers
 
-from articles.models import Articles
+from articles.models import Articles, Comment
+
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    
+    def get_user(self, obj):
+        return obj.user.email 
+    class Meta:
+        model = Comment
+        # fields = "__all__"
+        exclude = ("article",) 
+
 
 
 class ArticleCreateSerializer(serializers.ModelSerializer): # 게시글 작성 하는것도 따로 해줘야함
@@ -27,3 +40,8 @@ class ArticleListSerializer(serializers.ModelSerializer): # 필요한 정보만 
         model = Articles
         fields = ("id","title","image","updated_at","user","content")
 
+class CommentCreateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Comment
+        fields = ("content",)

@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 
-from articles.models import Articles
-from articles.serializers import ArticleListSerializer, ArticleCreateSerializer
+from articles.models import Articles, Comment
+from articles.serializers import ArticleListSerializer, ArticleCreateSerializer, CommentCreateSerializer, CommentSerializer
 from rest_framework.generics import get_object_or_404
 
 # 
@@ -59,18 +59,43 @@ class ArticleDetailView(APIView):
 
 class CommentView(APIView):
     def get(self, request, article_id):
-        print("get요청")
-    def post(self, request, article_id):
-        print("post요청")
+        article = Articles.objects.get(id=article_id)
+        comments = article.comment_set.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        # print("get요청")
+    def post(self, request, article_id): # 댓글 생성 기능
+        serializer = CommentCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user, article_id=article_id )
+            return Response(serializer.data, status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # print("post요청")
+
         
+class CommentDetailView(APIView):
+    def put(self, request, article_id, comment_id):
+        comment = get_object_or_404(Comment, id=comment_id)
+        if request.user == comment.user:
+            serializer = CommentCreateSerializer(comment, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response("권한이없습니다.", status=status.HTTP_403_FORBIDDEN) 
+            
+            
+        # print("put 요청")
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    def delete(self, request, article_id, comment_id):
+        comment = get_object_or_404(Comment, id=comment_id)
+        if request.user == comment.user:
+            comment.delete()
+            return Response("삭제완료",status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response("권한이없습니다.", status=status.HTTP_403_FORBIDDEN)
+        # print("delete요청")
+       
