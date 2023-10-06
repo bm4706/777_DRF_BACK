@@ -16,3 +16,17 @@ class Articles(models.Model):
     
     def __str__(self): # admin페이지에서 타이틀해야함
         return str(self.title)
+    
+    
+    
+    
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # 회원id
+    article = models.ForeignKey(Articles, on_delete=models.CASCADE) # 게시글번호
+    # 글이 삭제되면 글에 작성된 댓글도 사라지게 해야하므로 추가
+    content = models.TextField() # 댓글내용
+    created_at = models.DateTimeField(auto_now_add=True) # 생성시간
+    updated_at = models.DateTimeField(auto_now=True) # 수정시간
+    
+    def __str__(self):
+        return str(self.content)
