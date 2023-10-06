@@ -10,4 +10,7 @@ from users import views
 
 urlpatterns = [
     path('signup/', views.Signup.as_view(),name="signup"),
+    path('api/token/', views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),   # 토큰 방식의 로그인 urls 
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+
