@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import MyUser
+from .models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=MyUser
+        model=User
         fields="__all__"
         
     def create(self, validated_data):
