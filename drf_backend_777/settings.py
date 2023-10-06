@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'users',
+    'articles'
 ]
 
 # 라이브러리를 사용하도록 django 프로젝트를 구성해야함 authentication 인증클래스 목록에 추가합니다.
