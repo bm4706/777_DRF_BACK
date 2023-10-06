@@ -41,13 +41,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'users',
+    'articles',
 ]
 
 # 라이브러리를 사용하도록 django 프로젝트를 구성해야함 authentication 인증클래스 목록에 추가합니다.
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-    	'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+    	'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
 
@@ -134,10 +134,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "users.MyUser"
+AUTH_USER_MODEL = "users.User"
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=3), # 지정된 시간 이상 로그인시 자동 로그아웃기능
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1800), # 지정된 시간 이상 로그인시 자동 로그아웃기능
     "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,

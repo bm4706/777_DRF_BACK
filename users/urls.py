@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -12,5 +12,7 @@ urlpatterns = [
     path('signup/', views.Signup.as_view(),name="signup"),
     path('api/token/', views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),   # 토큰 방식의 로그인 urls 
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('logout/', views.LogoutView.as_view(), name='logout'),
+    
 ]
 
