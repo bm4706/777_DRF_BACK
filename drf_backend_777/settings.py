@@ -46,7 +46,8 @@ INSTALLED_APPS = [
 # 라이브러리를 사용하도록 django 프로젝트를 구성해야함 authentication 인증클래스 목록에 추가합니다.
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    	'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
     )
 }
 

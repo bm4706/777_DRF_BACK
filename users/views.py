@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import MyUser
 
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, CustomTokenObtainPairSerializer
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView, # 로그인기능?
@@ -26,3 +26,5 @@ class Signup(APIView):
             return Response({"message":f"${serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
 
 # 로그인
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
