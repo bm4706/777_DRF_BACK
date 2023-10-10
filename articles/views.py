@@ -54,8 +54,6 @@ class ArticleDetailView(APIView):
             return Response("권한이없습니다.", status=status.HTTP_403_FORBIDDEN)
         # print("delete요청")
         
-        
-
 
 class CommentView(APIView):
     def get(self, request, article_id):
@@ -71,7 +69,7 @@ class CommentView(APIView):
             return Response(serializer.data, status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        # print("post요청")
+        # print("post요청") 
 
         
 class CommentDetailView(APIView):
@@ -99,3 +97,14 @@ class CommentDetailView(APIView):
             return Response("권한이없습니다.", status=status.HTTP_403_FORBIDDEN)
         # print("delete요청")
        
+    
+class Like_View(APIView):
+    def post(self, request, article_id):
+        article = get_object_or_404(Articles, id=article_id) # 게시글 id 불러오는 변수
+        if request.user in article.like.all(): # 좋아요 취소
+            article.like.remove(request.user)
+            return Response("좋아요 취소!", status=status.HTTP_200_OK)
+        else: # 좋아요
+            article.like.add(request.user)
+            return Response("좋아요", status=status.HTTP_200_OK)
+        
