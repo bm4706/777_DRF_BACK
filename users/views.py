@@ -39,3 +39,16 @@ class LogoutView(APIView):
         # 현재 사용자의 토큰을 무효화하기 위해 토큰을 삭제합니다.
         request.auth.delete()
         return Response("로그아웃",status=status.HTTP_204_NO_CONTENT)"""
+        
+
+# 팔로우
+class Follow_View(APIView):
+    def post(self, request, user_id):
+        you = get_object_or_404(User, id=user_id) # user id 가져오기
+        me = request.user # 로그인 유저
+        if me in you.following.all():
+            you.following.remove(me)
+            return Response("팔로우를 취소하였습니다.", status=status.HTTP_200_OK)
+        else:
+            you.following.add(me)
+            return Response("팔로우했습니다.", status=status.HTTP_200_OK)

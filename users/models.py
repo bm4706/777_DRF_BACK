@@ -49,6 +49,10 @@ class User(AbstractBaseUser):
     
     image = models.ImageField(upload_to="", null=True, blank=True) # blank=True면 Optional 필드
     
+    
+    follower = models.ManyToManyField('self',related_name="following", blank=True, symmetrical=False)
+    
+    
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -75,3 +79,4 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
