@@ -24,21 +24,21 @@ class ArticleCreateSerializer(serializers.ModelSerializer): # 게시글 작성 �
 
 class ArticleListSerializer(serializers.ModelSerializer): # 필요한 정보만 볼려고함
     user = serializers.SerializerMethodField()
-    # likes_count = serializers.SerializerMethodField() 
-    # comment_count = serializers.SerializerMethodField()
+    like_count = serializers.SerializerMethodField() 
+    comment_count = serializers.SerializerMethodField()
     
     def get_user(self, obj):
         return obj.user.email
     
-    """def get_likes_count(self, obj): # 좋아요 수 체크
-        return obj.likes.count()
+    def get_like_count(self, obj): # 좋아요 수 체크
+        return obj.like.count()
     
     def get_comment_count(self,obj): # 댓글수 체크
         return obj.comment_set.count()
-    """
+    
     class Meta:
         model = Articles
-        fields = ("id","title","image","updated_at","user","content")
+        fields = ("id","title","image","updated_at","user","content","like_count","comment_count")
 
 class CommentCreateSerializer(serializers.ModelSerializer):
     

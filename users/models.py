@@ -32,7 +32,6 @@ class UserManager(BaseUserManager):
             email,
             nickname=nickname,
             password=password,
-            
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -50,7 +49,7 @@ class User(AbstractBaseUser):
     image = models.ImageField(upload_to="", null=True, blank=True) # blank=True면 Optional 필드
     
     
-    follower = models.ManyToManyField('self',related_name="following", blank=True, symmetrical=False)
+    followings = models.ManyToManyField('self',related_name="followers", blank=True, symmetrical=False)
     
     
     is_active = models.BooleanField(default=True)

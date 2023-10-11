@@ -101,10 +101,12 @@ class CommentDetailView(APIView):
 class Like_View(APIView):
     def post(self, request, article_id):
         article = get_object_or_404(Articles, id=article_id) # 게시글 id 불러오는 변수
-        if request.user in article.like.all(): # 좋아요 취소
-            article.like.remove(request.user)
-            return Response("좋아요 취소!", status=status.HTTP_200_OK)
-        else: # 좋아요
-            article.like.add(request.user)
-            return Response("좋아요", status=status.HTTP_200_OK)
-        
+        if request.user != article.user:
+            if request.user in article.like.all(): # 좋아요 취소
+                article.like.remove(request.user)
+                return Response("좋아요 취소!", status=status.HTTP_200_OK)
+            else: # 좋아요
+                article.like.add(request.user)
+                return Response("좋아요", status=status.HTTP_200_OK)
+        else:
+            return Response("자추금지.", status=status.HTTP_406_NOT_ACCEPTABLE)
