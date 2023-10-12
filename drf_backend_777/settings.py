@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'users',
     'articles',
+    "corsheaders",
 ]
 
 # 라이브러리를 사용하도록 django 프로젝트를 구성해야함 authentication 인증클래스 목록에 추가합니다.
@@ -54,6 +55,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -175,6 +177,8 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 STATIC_ROOT = BASE_DIR / "static"
 

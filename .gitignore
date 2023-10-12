@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,windows,django,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,visualstudiocode,windows,django,python
-# front/
+front/
 ### Django ###
 *.log
 *.pot

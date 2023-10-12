@@ -21,6 +21,7 @@ class ArticleView(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         # print("post요청입니다.")
         
