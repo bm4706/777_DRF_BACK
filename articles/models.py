@@ -8,7 +8,7 @@ class Articles(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    image = models.ImageField(upload_to='post/', blank=True)
+    image = models.ImageField(upload_to='post/', null=True, blank=True)
     created_at = models.DateField(auto_now_add=True) # 생성할때만 추가
     updated_at = models.DateField(auto_now=True) # 세이브할때마다 갱신
     like = models.ManyToManyField(User, related_name="like",blank=True) # 좋아요
